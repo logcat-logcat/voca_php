@@ -1,0 +1,80 @@
+﻿#file_form{
+	position : absolute;
+	width : 16%;
+	height : 17	%;
+	top : 20%;
+
+	background-color : #ffffff;
+	
+	border: 7px solid;
+	border-color : #5B2CE9;
+	padding : 5px;
+	
+	box-shadow: 6px 6px 2px #5B2CE9;
+}
+#file_name{
+	position : relative;
+	
+	color : #5B2CE9;
+	font-size : xx-large;
+	font-weight : 1000;
+	
+	top : -10%;
+	transform : translate(0%,-30%);
+}
+
+#file_test{
+	position : relative;
+	left : 5%;
+	top : -20%;
+	transform : translate(0%,-30%);
+	
+	color : #5B2CE9;
+	background-color : #ffffff;
+	border : none;
+	font-size : xx-large;
+	font-weight : bolder;
+}
+#file_test:hover{
+	position : relative;
+	left : 5%;
+	top : -20%;
+	transform : translate(0%,-30%);
+	
+	color : #ffffff;
+	background-color : #5B2CE9;
+	border : none;
+	font-size : xx-large;
+	font-weight : bolder;
+	
+	box-shadow: 0px 0px 10px blue;	
+}
+
+#file_edit{
+	position : relative;
+	left : 15%;
+	top : -20%;
+	transform : translate(0%,-30%);
+	
+	color : #5B2CE9;
+	background-color : #ffffff;
+	border : none;
+	font-size : xx-large;
+	font-weight : bolder;
+}
+#file_edit:hover{
+	position : relative;
+	left : 15%;
+	top : -20%;
+	transform : translate(0%,-30%);
+	
+	color : #ffffff;
+	background-color : #5B2CE9;
+	border : none;
+	font-size : xx-large;
+	font-weight : bolder;
+	
+	box-shadow: 0px 0px 10px blue;
+	
+	
+}

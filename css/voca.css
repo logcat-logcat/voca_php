@@ -1,0 +1,58 @@
+body{
+	background-color: #5B2CE9;
+}
+#main_text{
+	position : absolute;
+	left : 50%;
+	top : 30%;
+	transform: translate(-50%, -50%);
+	
+	
+	color : white;
+	background-color : #5B2CE9;
+	font-size : xxx-large;
+	font-weight : 900
+}
+#id{  /*id 입력박스*/
+	position : absolute;
+	left : 50%;
+	top : 55%;
+	transform: translate(-55%, -150%);
+    
+	color : white;
+	font-size : large
+	font-weight : bold; 
+}
+#pass{ /*비번 입력박스*/
+	position : absolute;
+	left : 50%;
+	top : 55%;
+	transform: translate(-50%, 50%);
+    
+	color : white;
+	font-size : large
+	font-weight : bold;
+}
+#login{ /* 로그인 버튼*/
+	position : absolute;
+	left : 50%;
+	top : 70%;
+	transform: translate(-200%, -50%);
+    
+	color : white;
+	background-color : black;
+	font-size : x-large;
+	font-weight : bold;
+}
+#new_login{ /* 로그인 버튼*/
+	position : absolute;
+	left : 50%;
+	top : 70%;
+	transform: translate(-0%, -50%);
+	font-weight : bold;
+    
+	color : white;
+	background-color : black;
+	font-size : x-large;
+	font-weight : bold;
+}
