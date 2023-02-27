@@ -1,0 +1,30 @@
+.box {
+    width: 200px;
+    height: 100px;
+    background-color: blue;
+    color: white;
+    position: absolute;
+    left: 0;
+    /*transition: left 1s ease-out, opacity 1s ease-out;*/
+  }
+
+  
+  .button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: lightblue;
+    border: none;
+    cursor: pointer; 
+  }
+  
+  .button:focus + .box {
+    animation: disappear 4s forwards;
+  }
+  
+  @keyframes disappear {
+    to {
+      left: 80%;
+      opacity: 0;
+    }
+  }
+  

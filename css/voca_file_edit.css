@@ -35,6 +35,7 @@
 	font-size : x-large;
 	font-weight : bolder; 
 }
+
 #new_word{
 	position : inherit;
 	left : 7%;
@@ -121,8 +122,18 @@
 	font-size : xx-large;
 	font-weight : bolder;
 }
-
-#word{
+#file_name{ 
+	position : absolute;
+	left : 50%;
+	top : 5%;
+	transform: translate(0%, 0%);
+    
+	color : black;
+	font-size : x-large;
+	font-weight : bolder; 
+	border: 4px solid
+}
+.word{
 	position : absolute;
 	width : 40%;
 	height : 7%;
@@ -161,7 +172,7 @@
 	background-color : #ffffff;
 	border-right : 4px dashed black;
 }
-#english_e{
+.english_e{
 	position : inherit;
 	left : 7%;
 	top : 15%;
@@ -185,7 +196,7 @@
 	border-right : 4px dashed black;
 }
 
-#translate_e{
+.translate_e{
 	position : inherit;
 	left : 7%;
 	top : 15%;

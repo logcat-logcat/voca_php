@@ -1,0 +1,266 @@
+body{
+	background-color: #ffffff;
+}
+.main_bar{
+    background-color : #5B2CE9;
+    
+    position : absolute;
+	width : 100%;
+	height : 15%;
+	top : 0%;
+	left : 0%;
+
+}
+h1{
+    color : #ffffff;
+    position :inherit;
+
+    left : 5%;
+	top : 0%;
+
+    font-size : 400%;
+	font-weight : bolder;
+    
+    transform: translate(0%, -30%);
+
+    font-family : Arial, Helvetica, sans-serif;
+}
+#id{  /*id */
+	position : inherit;
+	left : 60%;
+	top : 3%;
+	transform: translate(-50%, 0%);
+    
+	color : white;
+	font-size : x-large;
+	font-weight : bold; 
+
+    font-family : Arial, Helvetica, sans-serif;
+}
+#file_name{  
+	position : inherit;
+	left : 75%;
+	top : 3%;
+	transform: translate(-50%, 0%);
+    
+	color : white;
+	font-size : x-large;
+	font-weight : bold; 
+
+    font-family : Arial, Helvetica, sans-serif;
+}
+
+.footer-container{
+    background-color : #5B2CE9;
+    color : #ffffff;
+    position : absolute;
+	width : 100%;
+	height : 6%;
+	top : 94%;
+	left : 0%;
+
+    transform: translate(0%, 0%);
+
+}
+.option1{
+    
+    background-color : #ffffff;
+    
+    position : absolute;
+	width : 50%;
+	height : 60%;
+	top : 20%;
+	left : 50%;
+
+    transform: translate(-50%, 0%);
+}
+
+.option2{
+    
+    background-color : #ffffff;
+    
+    position : absolute;
+	width : 50%;
+	height : 60%;
+	top : 20%;
+	left : 50%;
+
+    transform: translate(-50%, 0%);
+}
+
+
+h2{
+    color : #000000;
+    position :inherit;
+
+    left : 50%;
+	top : 5%;
+
+    font-size :  300%;
+	font-weight : bolder;
+    
+    transform: translate(-50%, -30%);
+
+    font-family : Arial, Helvetica, sans-serif; 
+}
+
+.option-description{
+    color : #000000;
+    position :inherit;
+
+    left : 50%;
+	top : 35%;
+
+    font-size :  large;
+	font-weight : bold;
+    
+    line-height: 2; /** 글 줄간격 */
+
+    transform: translate(-50%, -30%);
+
+    font-family : Arial, Helvetica, sans-serif; 
+}
+.option-button1{
+    background-color : #5B2CE9;
+    color : #ffffff;
+
+    position :inherit;
+
+    left : 25%;
+	top : 67%;
+
+    width : 16%;
+    height : 10%;
+
+    font-size :  x-large;
+	font-weight : 1000;
+
+    border : none;
+    border-radius: 10px;
+}
+
+.option-button1:hover{
+    box-shadow: 0px 0px 10px #5B2CE9;
+    cursor: pointer; /* 마우스 모양*/
+
+    background-color : #5B2CE9;
+    color : #ffffff;
+
+    position :inherit;
+
+    left : 25%;
+	top : 67%;
+
+    width : 16%;
+    height : 10%;
+
+    font-size :  x-large;
+	font-weight : 1000;
+
+    border : none;
+    border-radius: 10px;
+}
+
+.option-button2{
+    background-color : #5B2CE9;
+    color : #ffffff;
+
+    position :inherit;
+
+    left : 56%;
+	top : 67%;
+
+    width : 16%;
+    height : 10%;
+
+    font-size :  x-large;
+	font-weight : 1000;
+
+    border : none;
+    border-radius: 10px;
+}
+
+.option-button2:hover{
+    box-shadow: 0px 0px 10px #5B2CE9;
+    cursor: pointer; /* 마우스 모양*/
+
+    background-color : #5B2CE9;
+    color : #ffffff;
+
+    position :inherit;
+
+    left : 56%;
+	top : 67%;
+
+    width : 16%;
+    height : 10%;
+
+    font-size :  x-large;
+	font-weight : 1000;
+
+    border : none;
+    border-radius: 10px;
+}
+.left-arrow{
+    position: absolute;
+    top : 50%;
+    left : 0%;
+    transform: translate(0%, -50%);
+
+    
+    width : 0;
+    height :0;
+    border-bottom : 70px solid #ffffff;
+    border-top : 70px solid #ffffff;
+    border-right : 70px solid #7042f9;
+    border-left : 70px solid #ffffff;
+}
+.left-arrow:hover{
+    position: absolute;
+    top : 50%;
+    left : 0%;
+    transform: translate(0%, -50%);
+
+    cursor : pointer;
+   
+    width : 0;
+    height :0;
+    border-bottom : 70px solid #ffffff;
+    border-top : 70px solid #ffffff;
+    border-right : 70px solid #5B2CE9;
+    border-left : 70px solid #ffffff;
+}
+
+.right-arrow{
+    position: absolute;
+    top : 50%;
+    right : 0%;
+    transform: translate(0%, -50%);
+
+    width : 0;
+    height :0;
+    border-bottom : 70px solid #ffffff;
+    border-top : 70px solid #ffffff;
+    border-left : 70px solid #7042f9;
+    border-right : 70px solid #ffffff;
+}
+.right-arrow:hover{
+    position: absolute;
+    top : 50%;
+    right : 0%;
+    transform: translate(0%, -50%);
+    
+    cursor: pointer;
+    
+    width : 0;
+    height :0;
+    border-bottom : 70px solid #ffffff;
+    border-top : 70px solid #ffffff;
+    border-left : 70px solid #5B2CE9;
+    border-right : 70px solid #ffffff;
+}
+
+
+
+
+

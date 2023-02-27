@@ -28,7 +28,7 @@
 #id{  /*id */
 	position : absolute;
 	left : 90%;
-	top : 3	%;
+	top : 3%;
 	transform: translate(-50%, 0%);
     
 	color : white;
@@ -93,6 +93,8 @@
 	top : 20%;
 	transform : translate(0%,-20%);
 	
+	color : #5B2CE9;
+	
 	background-color : #ffffff;
 	border : none;
 	font-size : xx-large;
@@ -108,9 +110,22 @@
 	
 	color : #5B2CE9;
 	background-color : #ffffff;
-	border : none;
+	border : none;	
 	font-size : xx-large;
 	font-weight : bolder;
+}
+#file_form{
+	position : absolute;
+	width : 16%;
+	height : 17%;	
+
+	background-color : #ffffff;
+	
+	border: 7px solid;
+	border-color : #5B2CE9;
+	padding : 5px;
+	
+	box-shadow: 6px 6px 2px #5B2CE9;
 }
 #file_name{
 	position : relative;

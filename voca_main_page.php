@@ -11,25 +11,6 @@
 </head>
 
 <body>
-	
-	<div  id = "top_div" > 
-		<button onClick = "reload()" id = "main_text">VOCA HELPER</button>
-	</div>
-	
-	
-	<form action="/new_word" method="post" >  <!-- 단어장 만들때 보낼값-->
-		<p id = "id" name = "id" value = <?echo($_POST['id'])?>>id : '<?echo($_POST['id'])?>'</p> <!-- id만 보냄 -->
-		<input type="submit" id = "new_word" name = "new_member" value="create file"   formaction onclick="alert('제출 완료!')" /> <!-- disabled 테그로 post로 전송 안시키려 했는데 그러면 그냥 버튼 동작 자체를 안해서 그냥 보냄-->	
-	</form>
-	
-	<form action="/import_word" method="post" >  <!-- 온라인 단어장 불러올때-->
-		<p id = "id" name = "id" value = <?echo($_POST['id'])?>>id : '<?echo($_POST['id'])?>'</p> <!-- id만 보냄 -->
-		<input type="submit" id = "import_word" name = "import_word" value="import online file"   formaction onclick="alert('제출 완료!')" /> <!-- disabled 테그로 post로 전송 안시키려 했는데 그러면 그냥 버튼 동작 자체를 안해서 그냥 보냄-->	
-	</form>
-	
-	<form action="/voca_php/voca_main_login.php" method="post" >  <!-- 로그아웃-->
-		<input type="submit" id = "logout"  name = "new_member" value="logout"   formaction onclick="alert('제출 완료!')" /> 
-	</form>
 	<?php
 		$hostname = "localhost";
 		$username = "test1";
@@ -38,32 +19,77 @@
 
 		$conn = mysqli_connect($hostname,$username,$password,$dbname);
 
-
+		
 		if($conn){
 			echo("연결완료<br>");
 		}else{
 			echo("연결실패<br>");	
 		}
 		
-		$cnt = 0; // 단어장의 갯수 새어줄 변수
+		$id = $_POST['id'];
 		
-		$qurry_id_check = "select * from user_file_cross where id = '$id'";
-		$mysql_id_check = mysqli_query($conn,$qurry_id_check);
-		$row_id=mysqli_fetch_array($mysql_id_check);
-		if($row_id[0]){
-			while($row_id[0]){
-				echo "
-				<form action='/' method='post' id = 'file_form' style = 'left : (10*$cnt)%; top : 40%'> 
-					<p id = 'file_name' name = 'id'>나의 단어장1</p>
-					<input type='submit' id = 'file_test' name = 'import_word' value='test'/> 
-					<input type='submit' id = 'file_edit' name = 'import_word' value='edit'/> 					
-				</form>
-				";
-				$cnt = $cnt + 1;
-			}
+		$qurry_num_check = "select * from file_num_stack";
+		$mysql_num_check = mysqli_query($conn,$qurry_num_check);
+
+		while($row_num=mysqli_fetch_array($mysql_num_check)){
+			$file_num = $row_num[0]+1;
+			
+			$qurry_newu = "UPDATE file_num_stack SET stack = $file_num;";
+			$mysql_newu = mysqli_query($conn,$qurry_newu);
+		}
+	?>
+	<div  id = "top_div" > 
+		<button onClick = "reload()" id = "main_text">VOCA HELPER</button>
+	</div>
+	
+	 <!-- id만 보냄 -->
+	
+	<form action="/voca_php/voca_file_edit.php" method="post" >  <!-- 단어장 만들때 보낼값-->
+		<p id = "id" name = "id" value = <?echo($_POST['id'])?>>id : '<?echo($_POST['id'])?>'</p>
+		<input type="submit" id = "new_word" name = "new_member" value="create file" /> <!-- disabled 테그로 post로 전송 안시키려 했는데 그러면 그냥 버튼 동작 자체를 안해서 그냥 보냄-->	
+		<input type = 'hidden' name = 'new' value = "new">
+		<input type = 'hidden' name = 'file_name' value = "<?echo($file_num)?>">
+		<input type = 'hidden' name = 'id' value = "<?echo($id)?>">
+	</form>
+	
+	<form action="/import_word" method="post" >  <!-- 온라인 단어장 불러올때-->
+		<input type="submit" id = "import_word" name = "import_word" value="import online file"  /> <!-- disabled 테그로 post로 전송 안시키려 했는데 그러면 그냥 버튼 동작 자체를 안해서 그냥 보냄-->	
+	</form>
+	
+	<form action="/voca_php/voca_main_login.php" method="post" >  <!-- 로그아웃-->
+		<input type="submit" id = "logout"  name = "logout" value="logout" /> 
+	</form>
+	<?
+		
+		$cnt = 0; // 단어장의 갯수 새어줄 변수
+		$id = $_POST['id'];
+		
+		/*
+		$qurry_newu = "insert into user_file_cross values('$id','file1');";
+		$mysql_newu = mysqli_query($conn,$qurry_newu);
+		*/
+		
+		$qurry_file_check = "select * from user_file_cross where id = '$id'";
+		$mysql_file_check = mysqli_query($conn,$qurry_file_check);
+
+		
+		
+		while($row_file=mysqli_fetch_array($mysql_file_check)){
+			echo"파일 있음";
+			$cnt = $cnt + 10;
+			echo "
+			<link rel='stylesheet' type='text/css' href='/voca_php/css/voca_main_page.css'>
+			
+			<form action='/voca_php/voca_file_edit.php' method='post' id = 'file_form' style = 'left : $cnt%; top : 40%;'>
+				<p id = 'file_name' name = 'file_name'>$row_file[1]</p>
+				<input type='submit' id = 'file_test' name = 'new' value='test'/> 
+				<input type='submit' id = 'file_edit' name = 'new' value='edit'/> 
+				<input type = 'hidden' name = 'id' value = $id>
+				<input type = 'hidden' name = 'file_name'  value = '$row_file[1]'>
+			</form>
+			";
 		}
 		
-
 	?>
 </body>
 </html>
