@@ -1,17 +1,10 @@
 <?php
-if ($_POST['func'] == "new_word") {
-    $rows = $_POST['rows'];
-    $rows[] = array('단어 입력', '뜻 입력');
-    echo json_encode($rows);
-} else if ($_POST['func'] == "delete") {
-    $cnt = $_POST['cnt'];
-    $rows = $_POST['rows'];
-    unset($rows[$cnt]);
-    echo json_encode($rows);
-} else if ($_POST['func'] == "save") {
+if ($_POST['func'] == "save") {
     $rows = $_POST['rows'];
     $old_title = $_POST['old_title'];
     $new_title = $_POST['new_title'];
+
+    echo "값 받음";
 
     $hostname = "localhost";
     $username = "";
@@ -38,7 +31,7 @@ if ($_POST['func'] == "new_word") {
         mysqli_stmt_execute($stmt);
     }
 
-    echo "저장완료";
+    
 
     mysqli_stmt_close($stmt);
     mysqli_close($conn);

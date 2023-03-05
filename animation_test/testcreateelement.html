@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>
+            
+        </title>
+        <link rel = "stylesheet" href = "C:\Users\USER\Desktop\voca_php\css\voca_file_edit.css">
+    </head>
+    <script>
+        row_length = 0;
+        function create(){
+            row_length++;
+            var div_main = document.createElement("div");
+
+			div_main.id = "word"+row_length;
+			div_main.className = "word";
+			div_main.style.top = (row_length*10) + '%';
+			div_main.style.left = '35%';
+
+			var div1 = document.createElement("div");
+			div1.id = "word_boundary1";
+			var div2 = document.createElement("div");
+			div2.id = "word_boundary2";
+			var div3 = document.createElement("div");
+			div3.id = "word_boundary3";
+			var div4 = document.createElement("div");
+			div4.id = "word_boundary4";
+
+			var p = document.createElement("p");
+			p.id = 'number';
+			p.textContent = ''+ row_length;
+
+			var input_q = document.createElement("input");
+			input_q.type = "text";
+			input_q.className = "english_e";
+			input_q.id = "english_e"+row_length;
+			input_q.value = "단어 입력";
+
+			var input_a = document.createElement("input");
+			input_a.type = "text";
+			input_a.className = "translate_e";
+			input_a.id = "translate_e"+row_length;
+			input_a.value = "뜻 입력";
+
+			var button = document.createElement("button");
+			button.addEventListener("click", function(){f_delete(row_length); });
+			button.id = 'delete';
+			button.textContent = 'delete';
+
+
+			div1.appendChild(p);
+			div2.appendChild(input_q);
+			div3.appendChild(input_a);
+		    div4.appendChild(button);
+
+			div_main.appendChild(div1);
+			div_main.appendChild(div2);
+			div_main.appendChild(div3);
+			div_main.appendChild(div4);
+
+			document.body.appendChild(div_main);
+        }
+        function f_delete(index){
+            alert(index);
+
+        }
+    </script>
+    <body>
+        <button onclick = "create()">create element</button>
+    </body>
+</html>
