@@ -48,7 +48,7 @@
 		<p id = "id" name = "id" value = <?echo($_POST['id'])?>>id : '<?echo($_POST['id'])?>'</p>
 		<input type="submit" id = "new_word" name = "new_member" value="create file" /> <!-- disabled 테그로 post로 전송 안시키려 했는데 그러면 그냥 버튼 동작 자체를 안해서 그냥 보냄-->	
 		<input type = 'hidden' name = 'new' value = "new">
-		<input type = 'hidden' name = 'file_name' value = "<?echo($file_num)?>">
+		<input type = 'hidden' name = 'file_name' value = "<?echo("file" . $file_num)?>">
 		<input type = 'hidden' name = 'id' value = "<?echo($id)?>">
 	</form>
 	
@@ -73,14 +73,19 @@
 		$mysql_file_check = mysqli_query($conn,$qurry_file_check);
 
 		
-		
+		$left_cnt = -20;
+		$top_cnt = 40;
 		while($row_file=mysqli_fetch_array($mysql_file_check)){
 			echo"파일 있음";
-			$cnt = $cnt + 10;
+			$left_cnt = $left_cnt + 25;
+			if($left_cnt > 80){
+				$left_cnt = 5;
+				$top_cnt = $top_cnt + 30;
+			}
 			echo "
 			<link rel='stylesheet' type='text/css' href='/voca_php/css/voca_main_page.css'>
 			
-			<form action='/voca_php/voca_file_edit.php' method='post' id = 'file_form' style = 'left : $cnt%; top : 40%;'>
+			<form action='/voca_php/voca_file_edit.php' method='post' id = 'file_form' style = 'left : $left_cnt%; top : $top_cnt%;'>
 				<p id = 'file_name' name = 'file_name'>$row_file[1]</p>
 				<input type='submit' id = 'file_test' name = 'new' value='test'/> 
 				<input type='submit' id = 'file_edit' name = 'new' value='edit'/> 

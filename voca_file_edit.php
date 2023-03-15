@@ -45,7 +45,9 @@
 			}
 			print_file($rows); // 데이터 출력
 		}else if($new == 'test'){ // test 누르고 들어왔을때는 test 페이지로 넘김
+			echo "<script> pageGoPost({url:'/voca_php/voca_main_test.php', target:'_self', vals:[['id',{$id}], ['file',{$file_name}]]}); </script>";
 		}else{ // get이나 오류로 들어왔을 경우 login 페이지로 넘김
+			echo "<script>location.href = '/voca_php/voca_main_login.php';</script>";
 		}
 		
 		function print_file(array $rows){ /** 파일 출력함수 */
@@ -63,10 +65,10 @@
 							<p id = 'number{$a_rows}' class = 'number' name = 'number'>$a_rows</p>
 						</div>
 						<div id = 'word_boundary2'>
-							<input type = 'text' class = 'english_e'  id = 'english_e{$a_rows}' value = {$rows[$a_rows-1][0]}></input>
+							<input type = 'text' class = 'english_e'  id = 'english_e{$a_rows}' value = '{$rows[$a_rows-1][0]}' ></input> 
 						</div>
 						<div id = 'word_boundary3'>
-							<input type = 'text' class = 'translate_e' id = 'translate_e{$a_rows}' value = {$rows[$a_rows-1][1]} ></input>  
+							<input type = 'text' class = 'translate_e' id = 'translate_e{$a_rows}' value = '{$rows[$a_rows-1][1]}' ></input>  
 						</div>
 						<div id = 'word_boundary4'>
 							<button onclick = 'f_delete({$a_rows})' id = 'delete{$a_rows}' class = 'delete' >delete</button>
@@ -74,6 +76,7 @@
 					</div>";
 			}
 		}
+		// value 안에 공백을 포함한 문자열을 넣으려면 꼭 따음표로 묶어야 한다.
 		
 	
 		
@@ -85,8 +88,11 @@
 		row_index : id값을 저장하기 위한 index
 
 		*/
+		row = <?php echo json_encode($rows); ?>;
+		console.log(row);
 		row_length = <?php echo json_encode($cnt = count($rows)); ?>;
 		row_index = row_length;
+		old_name = <?php echo json_encode($file_name);?>;  // @@@@값을 저장할때 이러게 저장, 괜히 "" 씌웠다가 "문자열" 로 저장되어서 큰일난다
 
 		function reload(){ location.reload(); } /**  새로고침 */
 
@@ -220,25 +226,52 @@
 
 		function save(){ /**  저장버튼 */
 			var edited_rows = []; // 저장할때 inputText 값들을 따로 저장할 배열 생성,
-			alert("2");
-			console_log("dmdrldlt");
-			for (var i = 1; i < row_index; i++) {
-				if(document.getElementById('word'+ i))
-				edited_rows[i] = [];
-				edited_rows[i][0] = document.getElementById("english_e"+i).value;
-				edited_rows[i][1] = document.getElementById("translate_e"+i).value;
+			var new_name =  document.getElementById("file_name").value;  // 이것의 공백을 _로 바꾼는 코드 필요
+			var old = old_name;
+			//console.log("click ok");
+			//console.log("new_name : " + new_name);
+
+			var k =1;
+			for (var i = 1; i <= row_length; i++) { // row_index 값으로 돌리기 떄문에 
+				while(!document.getElementById('word'+ k)){ // 삭제가 되어 없어진 인덱스 번호는 건너 뛴다.
+					k++;
+				}
+				edited_rows[i-1] = [];
+				edited_rows[i-1][0] = document.getElementById("english_e"+k).value;
+				edited_rows[i-1][1] = document.getElementById("translate_e"+k).value;
+				k++;
 				
 			}
-			alert("1");
-			console_log(edited_rows);
+			//console.log("row ok");
+			//console.log(edited_rows);
 			$.ajax({
-				url: 'voca_php/update_rows.php', // 서버 측 파일 경로
+				url: 'http://sdh55767.cafe24.com/voca_php/update_rows.php', // 서버 측 파일 경로
 				type: 'post', // 전송 방식
-				data: { rows: json_encode(edited_rows),old_title : <?php echo ($file_name);?> , new_title : document.getElementById("file_name").textContent, func: "save" }, // 전송할 데이터 (배열을 JSON 문자열로 변환)
+				
+				data: { id : '<?php echo($id);?>', rows: edited_rows,old_title : old , new_title : new_name , func: "save"}, // 전송할 데이터 (배열을 JSON 문자열로 변환)
 				success: function(result){ // 서버 측에서 처리된 결과를 받아옴
-					alert(result);
+					console.log(result);
+					alert("저장 완료");
+					old_name = new_name;
 				}
 			})
+		}
+
+		function delete_file(){
+			var old = old_name;
+			if (confirm('정말 단어장을 삭제 하시겠습니까?')) {
+				$.ajax({
+					url: 'http://sdh55767.cafe24.com/voca_php/update_rows.php', // 서버 측 파일 경로
+					type: 'post', // 전송 방식
+					
+					data: { id : '<?php echo($id);?>', title : old , func: "delete_file"}, // 전송할 데이터 (배열을 JSON 문자열로 변환)
+					success: function(result){ // 서버 측에서 처리된 결과를 받아옴
+						console.log(result);
+						pageGoPost({url:'/voca_php/voca_main_page.php', target:'_self', vals:[['id', '<? echo ($id)?>']]});
+					}
+				})
+			  
+			} else {}
 		}
 		
 	</script>
@@ -247,18 +280,18 @@
 		
 		<p id = "id" name = "id">id : <? echo ($id)?></p>
 		
-		
-
-		
 		<button onclick = "new_word()" id = "new_word">new word</button>
 		
-		<button onclick = "" id = "save">save</button>
+		<button onclick = "save()" id = "save">save</button>
 		
 		<button onclick = "quit()" id = "quit">quit</button>
+
+		<button onclick = "delete_file()" id = "delete_file">delete file</button>
 		
 	</div>
 	
-	<input type="text" id="file_name" name="file_name" value="file : <? echo ($file_name)?>">
+	<p id  = "file_name_p">file :</p>
+	<input type="text" id="file_name" name="file_name" value="<? echo ($file_name)?>">
 	
 </body>
 </html>
