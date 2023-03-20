@@ -19,13 +19,13 @@
 
 		$conn = mysqli_connect($hostname,$username,$password,$dbname);
 
-		
+	/*	
 		if($conn){
 			echo("연결완료<br>");
 		}else{
 			echo("연결실패<br>");	
 		}
-		
+		*/
 		$id = $_POST['id'];
 		
 		$qurry_num_check = "select * from file_num_stack";
@@ -59,6 +59,11 @@
 	<form action="/voca_php/voca_main_login.php" method="post" >  <!-- 로그아웃-->
 		<input type="submit" id = "logout"  name = "logout" value="logout" /> 
 	</form>
+
+	 <!-- 바닥글 -->
+	 <div class="footer-container">
+        <p>저작권 © 2023 App logcat. All rights reserved.</p>
+    </div>
 	<?
 		
 		$cnt = 0; // 단어장의 갯수 새어줄 변수
@@ -76,7 +81,7 @@
 		$left_cnt = -20;
 		$top_cnt = 40;
 		while($row_file=mysqli_fetch_array($mysql_file_check)){
-			echo"파일 있음";
+			//echo"파일 있음";
 			$left_cnt = $left_cnt + 25;
 			if($left_cnt > 80){
 				$left_cnt = 5;
@@ -85,13 +90,14 @@
 			echo "
 			<link rel='stylesheet' type='text/css' href='/voca_php/css/voca_main_page.css'>
 			
-			<form action='/voca_php/voca_file_edit.php' method='post' id = 'file_form' style = 'left : $left_cnt%; top : $top_cnt%;'>
-				<p id = 'file_name' name = 'file_name'>$row_file[1]</p>
-				<input type='submit' id = 'file_test' name = 'new' value='test'/> 
-				<input type='submit' id = 'file_edit' name = 'new' value='edit'/> 
-				<input type = 'hidden' name = 'id' value = $id>
-				<input type = 'hidden' name = 'file_name'  value = '$row_file[1]'>
+			<form action='/voca_php/voca_file_edit.php' method='post' id='file_form' style='left: $left_cnt%; top: $top_cnt%;'>
+				<p id='file_name' name='file_name'>$row_file[1]</p>
+				<button type='submit' id = 'file_test' name='new' value='test'>Test</button>
+				<button type='submit' id = 'file_edit' name='new' value='edit'>Edit</button>
+				<input type='hidden' name='id' value='$id'>
+				<input type='hidden' name='file_name' value='$row_file[1]'>
 			</form>
+
 			";
 		}
 		

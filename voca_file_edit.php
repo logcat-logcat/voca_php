@@ -11,6 +11,28 @@
 </head>
 
 <body>
+	<script>
+		function reload(){ location.reload(); } /**  새로고침 */
+
+		function quit(){ // quit 눌렀을떄, yes 랑 no 버튼 나옴
+			if (confirm('홈 화면으로 나가시겠습니까?')) {
+				pageGoPost({url:'/voca_php/voca_main_page.php', target:'_self', vals:[['id', '<? echo ($_POST['id'])?>']]});
+			} else {}
+		}
+
+		function pageGoPost(d){  /** js로 form 역할하는 함수*/
+
+			var insdoc = "";
+			
+			for (var i = 0; i < d.vals.length; i++) { // d의 vals의 값만큼 반복 vals는 데이터 이름, 값 저장하는 배?열
+			insdoc+= "<input type='hidden' name='"+ d.vals[i][0] +"' value='"+ d.vals[i][1] +"'>"; // 값을 정리해서 저장
+			}
+			var goform = $("<form>", {method: "post",action: d.url,target: d.target,html: insdoc}).appendTo("body");
+
+			goform.submit();
+		}
+	</script>
+
 	<?php
 		$hostname = "localhost";
 		$username = "test1";
@@ -45,7 +67,8 @@
 			}
 			print_file($rows); // 데이터 출력
 		}else if($new == 'test'){ // test 누르고 들어왔을때는 test 페이지로 넘김
-			echo "<script> pageGoPost({url:'/voca_php/voca_main_test.php', target:'_self', vals:[['id',{$id}], ['file',{$file_name}]]}); </script>";
+			//echo "<script> alert('test');</script>";
+			echo "<script> pageGoPost({url:'/voca_php/voca_main_test.php', target:'_self', vals:[['id','{$id}'], ['file','{$file_name}']]}); </script>";
 		}else{ // get이나 오류로 들어왔을 경우 login 페이지로 넘김
 			echo "<script>location.href = '/voca_php/voca_main_login.php';</script>";
 		}
@@ -94,25 +117,7 @@
 		row_index = row_length;
 		old_name = <?php echo json_encode($file_name);?>;  // @@@@값을 저장할때 이러게 저장, 괜히 "" 씌웠다가 "문자열" 로 저장되어서 큰일난다
 
-		function reload(){ location.reload(); } /**  새로고침 */
-
-		function quit(){ // quit 눌렀을떄, yes 랑 no 버튼 나옴
-			if (confirm('홈 화면으로 나가시겠습니까?')) {
-			   pageGoPost({url:'/voca_php/voca_main_page.php', target:'_self', vals:[['id', '<? echo ($id)?>']]});
-			} else {}
-		}
 		
-		function pageGoPost(d){  /** js로 form 역할하는 함수*/
-
-			var insdoc = "";
-			
-			for (var i = 0; i < d.vals.length; i++) { // d의 vals의 값만큼 반복 vals는 데이터 이름, 값 저장하는 배?열
-			  insdoc+= "<input type='hidden' name='"+ d.vals[i][0] +"' value='"+ d.vals[i][1] +"'>"; // 값을 정리해서 저장
-			}
-			var goform = $("<form>", {method: "post",action: d.url,target: d.target,html: insdoc}).appendTo("body");
-
-			goform.submit();
-		}
 		
 		function f_delete(cnt){ /** delete 했을때 출력  */
 			var index = cnt;
@@ -227,7 +232,15 @@
 		function save(){ /**  저장버튼 */
 			var edited_rows = []; // 저장할때 inputText 값들을 따로 저장할 배열 생성,
 			var new_name =  document.getElementById("file_name").value;  // 이것의 공백을 _로 바꾼는 코드 필요
+			
+			new_name = new_name.replace(/\s/g, '_');
+			
 			var old = old_name;
+			if(old == new_name){
+				var change_title = "";
+			}else{
+				var change_title = "new";
+			}
 			//console.log("click ok");
 			//console.log("new_name : " + new_name);
 
@@ -248,11 +261,16 @@
 				url: 'http://sdh55767.cafe24.com/voca_php/update_rows.php', // 서버 측 파일 경로
 				type: 'post', // 전송 방식
 				
-				data: { id : '<?php echo($id);?>', rows: edited_rows,old_title : old , new_title : new_name , func: "save"}, // 전송할 데이터 (배열을 JSON 문자열로 변환)
+				data: { id : '<?php echo($id);?>', rows: edited_rows,old_title : old , new_title : new_name, change_title : change_title , func: "save"}, // 전송할 데이터 (배열을 JSON 문자열로 변환)
 				success: function(result){ // 서버 측에서 처리된 결과를 받아옴
 					console.log(result);
-					alert("저장 완료");
-					old_name = new_name;
+					if(result == "error: 파일 이름이 이미 존재합니다."){
+						alert(result);
+					}else{
+						alert("저장 완료");
+						old_name = new_name;
+					}
+					
 				}
 			})
 		}

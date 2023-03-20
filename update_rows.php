@@ -62,6 +62,7 @@ else if ($_POST['func'] == "save") {
     $old_title = $_POST['old_title']; // 원래 단어장 이름
     $new_title = $_POST['new_title']; // 바꿀 단어장 이름
     $id = $_POST['id']; // 사용자의 id
+    $c_title = $_POST['change_title'];
 
     
 
@@ -73,14 +74,22 @@ else if ($_POST['func'] == "save") {
     $conn = mysqli_connect($hostname, $username, $password, $dbname);
 
 
-   /* $query = "SELECT * FROM user_file_cross WHERE id = ? AND file = ?"; // 보낸 파일이 신규 파일인지 확인
+    $query = "SELECT * FROM user_file_cross WHERE file = ?"; // 파일의 바꿀 이름이 이미 있는지 확인
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, 'ss', $id, $old_title);
+    mysqli_stmt_bind_param($stmt, 's', $new_title);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    if (mysqli_num_rows($result) == 0) { // 신규 파일일 경우
-        */
+    //echo($c_title);
+    if (!mysqli_num_rows($result) == 0) { // 이름이 있으면 빠꾸
+        if($c_title == "new"){
+            echo "error: 파일 이름이 이미 존재합니다.";
+
+            mysqli_stmt_close($stmt);
+            mysqli_close($conn);
+            exit(); // 프로그램 종료
+        }
+    }
 
     $query = 'DELETE FROM user_file_cross WHERE id = ? and file =  ? ;';
     $stmt = mysqli_prepare($conn, $query); 
