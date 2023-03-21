@@ -1,7 +1,7 @@
 <html>
     <head> 
         <title></title>
-        <link rel = "stylesheet" href = "http://sdh55767.cafe24.com/voca_php/css/voca_test_memorize.css">
+        <link rel = "stylesheet" href = "http://sdh55767.cafe24.com/voca_php/css/voca_test_test.css">
         <script src="http://210.114.22.121/voca_php/lib/jquery-3.6.3.min.js"></script>
         
     </head>
@@ -57,7 +57,7 @@
                 $('.left-arrow').animate({opacity : "1"}, 1000);
                 document.getElementById('left-arrow').disabled = false;
             }
-            function right_disable(){
+         /*   function right_disable(){
                 $('.right-arrow').animate({opacity : "0"}, 1000);
                 document.getElementById('right-arrow').disabled = true;
             }
@@ -78,86 +78,141 @@
                 }else{
                     document.getElementById('op1_a').textContent = "";
                 }
-            }
+            }*/
 
             function left(){
                 
-
+                
                 row_cnt--; // 왼쪽으로 이동하는 거니 단어매계변수 -1
                 console.log(row_cnt);
 
                 if(row_cnt == 1) left_disable(); // 첫번째 단어면 왼쪽버튼 사라지기
-                if(row_cnt == row_length-1) right_able(); // 마지막에서 두변쨰 단어면 오른쪽 버튼 보이기
+                if(row_cnt == row_length-1) document.getElementById('right-arrow').style = "color : #ff0000"; // 마지막에서 두변쨰 단어
 
                 if(row_cnt % 2 == 1){ //홀수번째, 옵션2에서 온다.
-                    document.getElementById('op1-b1').disabled = false;
+                  /*  document.getElementById('op1-b1').disabled = false;
                     document.getElementById('op1-b2').disabled = false;  
                     document.getElementById('op2-b1').disabled = true;
-                    document.getElementById('op2-b2').disabled = true;
+                    document.getElementById('op2-b2').disabled = true; */
                     
                     document.getElementById('op2_p').textContent = row_cnt+"/"+row_length;
                     document.getElementById('op2_q').textContent = row[row_cnt-1]['0'];
-                    document.getElementById('op2_a').textContent = "";
+                    if(answer[row_cnt-1] != null){
+                        document.getElementById('op2_a').value = answer[row_cnt-1];
+                    }else{
+                        document.getElementById('op2_a').value = "";
+                    }
+                    
+                    answer[row_cnt] = document.getElementById('op1_a').value // 방금 없어진 op1의 입력을 (왼쪽으로 이동했으니까)한칸 뒤의 배열에 저장
 
                     $('.option1').animate({left : "0"},0);
                     $('.option1').animate({opacity : '1.0', left : "50%"},1000);
                     $('.option2').animate({opacity : '0.0', left : "75%"},400);
                     $('.option2').animate({left : "0"},0);
                 }else{ // 짝수번째, 옵션 1이 온다.
-                    document.getElementById('op1-b1').disabled = true;
+                    /* document.getElementById('op1-b1').disabled = true;
                     document.getElementById('op1-b2').disabled = true;  
                     document.getElementById('op2-b1').disabled = false;
-                    document.getElementById('op2-b2').disabled = false;
+                    document.getElementById('op2-b2').disabled = false;*/
                     
                     document.getElementById('op1_p').textContent = row_cnt+"/"+row_length;
                     document.getElementById('op1_q').textContent = row[row_cnt-1]['0'];
-                    document.getElementById('op1_a').textContent = "";
+                    if(answer[row_cnt-1] != null){
+                        document.getElementById('op1_a').value = answer[row_cnt-1];
+                    }else{
+                        document.getElementById('op1_a').value = "";
+                    }
+
+                    answer[row_cnt] = document.getElementById('op2_a').value // 방금 없어진 op2의 입력을 (왼쪽으로 이동했으니까)한칸 뒤의 배열에 저장
                     
                     $('.option2').animate({left : "0"},0);
                     $('.option2').animate({opacity : '1.0', left : "50%"},1000);
                     $('.option1').animate({opacity : '0.0', left : "75%"},400);
                     $('.option1').animate({left : "0"},0);
                 }
+
+                console.log(answer);
              
             }
             function right(){
                 
+                if(row_cnt == row_length) {
+                    if (confirm('답을 제출하고 체점을 받으시겠습니까?')) {
+        
+                        if(row_cnt % 2 == 1){answer[row_cnt-1] = document.getElementById('op1_a').value}
+                        else{answer[row_cnt-1] = document.getElementById('op2_a').value}
+                        
+                        pageGoPost({url:'/voca_php/voca_test_confirm.php', target:'_self', vals:[['id', '<? echo ($_POST['id'])?>'],['file', row],['answer', answer]]});
+                    } else { return; } // 체점 안받는닫고 하면 그냥 함수 나가버리기
+                }
+
                 row_cnt++; // 오른쪽으로 이동하기 때문에 단어 매계변수 +1
                 console.log(row_cnt);
 
                 if(row_cnt == 2) left_able(); // 두번째 단어일때 왼쪽 버튼 보이기
-                if(row_cnt == row_length) right_disable(); // 마지막 단어일때 오른쪽 버튼 숨기기
-
+                if(row_cnt == row_length) {
+                    document.getElementById('right-arrow').style = "color : #ff0000";
+                }
                 if(row_cnt % 2 == 1){ //홀수번째, 옵션2에서 온다
-                    document.getElementById('op1-b1').disabled = false;
+                   /* document.getElementById('op1-b1').disabled = false;
                     document.getElementById('op1-b2').disabled = false;  
                     document.getElementById('op2-b1').disabled = true;
-                    document.getElementById('op2-b2').disabled = true; 
+                    document.getElementById('op2-b2').disabled = true; */
 
                     document.getElementById('op2_p').textContent = row_cnt+"/"+row_length;
                     document.getElementById('op2_q').textContent = row[row_cnt-1]['0'];
-                    document.getElementById('op2_a').textContent = "";
+                    if(answer[row_cnt-1] != null){
+                        document.getElementById('op2_a').value = answer[row_cnt-1];
+                    }else{
+                        document.getElementById('op2_a').value = "";
+                    }
+                    
+
+                    answer[row_cnt-2] = document.getElementById('op1_a').value // 방금 없어진 op1의 입력을 (오른쪽으로 이동했으니까)한칸 앞의 배열에 저장
                     
                    
                     $('.option1').animate({left : "75%"},0);
                     $('.option2').animate({opacity : '0.0', left : "0"},600);
                     $('.option1').animate({opacity : '1.0', left : "50%"},1000);
                 }else{ // 짝수번째, 옵션 1이 온다.
-                    document.getElementById('op1-b1').disabled = true;
+                  /*  document.getElementById('op1-b1').disabled = true;
                     document.getElementById('op1-b2').disabled = true;  
                     document.getElementById('op2-b1').disabled = false;
-                    document.getElementById('op2-b2').disabled = false; 
+                    document.getElementById('op2-b2').disabled = false; */ 
 
                     document.getElementById('op1_p').textContent = row_cnt+"/"+row_length;
                     document.getElementById('op1_q').textContent = row[row_cnt-1]['0'];
-                    document.getElementById('op1_a').textContent = "";
+                    if(answer[row_cnt-1] != null){
+                        document.getElementById('op1_a').value = answer[row_cnt-1];
+                    }else{
+                        document.getElementById('op1_a').value = "";
+                    }
+
+                    answer[row_cnt-2] = document.getElementById('op2_a').value // 방금 없어진 op2의 입력을 (오른쪽으로 이동했으니까)한칸 앞의 배열에 저장
                     
                     $('.option2').animate({left : "75%"},0);
                     $('.option1').animate({opacity : '0.0', left : "0"},600);
                     $('.option2').animate({opacity : '1.0', left : "50%"},1000);
                 }
+
+                console.log(answer);
             }
 
+            document.addEventListener("keydown", function(event) {
+                if (event.keyCode == 37) { // 왼쪽 방향키
+                    left();
+                }
+                if (event.keyCode == 39) { // 오른쪽 방향키
+                    right();
+                }
+                if(event.keyCode == 13){
+                    if(row_cnt % 2 == 1){ // 홀수번째 인덱스면 op2가 화면에 출력중
+                        document.getElementById('op2_a').focus(); // 이러면 해당 input에서 커서가 포커스됨.
+                    }else{
+                        document.getElementById('op1_a').focus(); // 이러면 해당 input에서 커서가 포커스됨.
+                    }
+                }
+            });
 
             row = <? echo(json_encode($row))?>; // 단어장의 단어 배열
             option = <? echo(json_encode($_POST['option']))?>; // random인지 no_random 인지 담겨있는 변수
@@ -183,6 +238,7 @@
             row_length = row.length; // 단어장의 길이
             console.log(row);
             row_cnt = 1; // 단어장 번호 받는 매계변수
+            answer = new Array(row_length); // 정답 입력받으면 저장하는 배열 생성
 
             
         </script>
@@ -206,17 +262,18 @@
             
             <p class="option-description" id = "op1_p">1/40</p>
             <h2 style = "top : 10%" id = "op1_q">단어</h2>
-            <h2 style = "top : 50%" id = "op1_a">뜻</h2>
-            
-            <button class="option-button1" id = "op2-b1" disabled = "true" onclick="show_a();">뜻 보기</button>
-            <button class="option-button2" id = "op2-b2" disabled = "true" onclick="concil_a();">뜻 숨기기</button>
+            <input type = "text" style = "top : 50%" class = "op_a" id = "op1_a"></input>
+        
+           <!-- <button class="option-button1" id = "op2-b1" disabled = "true" onclick="show_a();">뜻 보기</button>
+            <button class="option-button2" id = "op2-b2" disabled = "true" onclick="concil_a();">뜻 숨기기</button> -->
         </div>
         <div class="option1">
             <p class="option-description" id = "op2_p">1/40</p>
             <h2 style = "top : 10%" id = "op2_q">단어</h2>
-            <h2 style = "top : 50%" id = "op2_a">뜻</h2>
-            <button class="option-button1" id = "op1-b1" onclick="show_a();">뜻 보기</button>
-            <button class="option-button2" id = "op1-b2" onclick="concil_a();">뜻 숨기기</button>
+            <input type = "text" style = "top : 50%" class = "op_a" id = "op2_a"></input>
+
+          <!--  <button class="option-button1" id = "op1-b1" onclick="show_a();">뜻 보기</button>
+            <button class="option-button2" id = "op1-b2" onclick="concil_a();">뜻 숨기기</button> -->
         </div>
     
         <!-- 다른 옵션으로 이동할 수 있는 화살표 버튼 -->

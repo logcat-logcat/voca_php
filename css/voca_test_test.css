@@ -138,6 +138,26 @@ h2{
     font-family : Arial, Helvetica, sans-serif; 
 }
 
+.op_a{
+    color : #000000;
+    position :inherit;
+
+    left : 50%;
+	top : 5%;
+
+    width : 70%;
+
+    font-size :  300%;
+	font-weight : bolder;
+    
+    transform: translate(-50%, -30%);
+
+    border-radius : 4%;
+    border-color : #000000;
+
+    font-family : Arial, Helvetica, sans-serif; 
+}
+
 .option-description{
     color : #000000;
     position :inherit;

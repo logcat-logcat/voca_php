@@ -158,6 +158,14 @@
                 }
             }
 
+            document.addEventListener("keydown", function(event) {
+                if (event.keyCode == 37) { // 왼쪽 방향키
+                    left();
+                }
+                if (event.keyCode == 39) { // 오른쪽 방향키
+                    right();
+                }
+            });
 
             row = <? echo(json_encode($row))?>; // 단어장의 단어 배열
             option = <? echo(json_encode($_POST['option']))?>; // random인지 no_random 인지 담겨있는 변수

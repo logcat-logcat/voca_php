@@ -74,20 +74,22 @@ else if ($_POST['func'] == "save") {
     $conn = mysqli_connect($hostname, $username, $password, $dbname);
 
 
-    $query = "SELECT * FROM user_file_cross WHERE file = ?"; // 파일의 바꿀 이름이 이미 있는지 확인
+    $query = "SELECT * FROM user_file_cross WHERE id = ?"; // 파일의 바꿀 이름이 이미 있는지 확인
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, 's', $new_title);
+    mysqli_stmt_bind_param($stmt, 's', $id);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
     //echo($c_title);
-    if (!mysqli_num_rows($result) == 0) { // 이름이 있으면 빠꾸
+    while ($files = mysqli_fetch_assoc($result)) { // 이름이 있으면 빠꾸
         if($c_title == "new"){
-            echo "error: 파일 이름이 이미 존재합니다.";
+			if($new_title == $files['file']){
+				echo "error: 파일 이름이 이미 존재합니다.";
 
-            mysqli_stmt_close($stmt);
-            mysqli_close($conn);
-            exit(); // 프로그램 종료
+				mysqli_stmt_close($stmt);
+				mysqli_close($conn);
+				exit(); // 프로그램 종료
+			}
         }
     }
 
